@@ -32,6 +32,8 @@ gem 'faker', '2.1.2'
 gem 'will_paginate', '3.1.8'
 gem 'bootstrap-will_paginate', '1.0.0'
 gem 'bootstrap-sass', '3.4.1'
+gem 'active_storage_validations', '0.8.2'
+gem 'mini_magick', '4.9.5'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false

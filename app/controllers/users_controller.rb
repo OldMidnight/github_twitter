@@ -10,6 +10,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     redirect_to root_url and return unless @user.activated?
+    @microposts = @user.microposts.paginate(page: params[:page])
   end
 
   def new
@@ -73,6 +74,12 @@ class UsersController < ApplicationController
     # Confirms an admin user.
     def admin_user
       redirect_to(root_url) unless current_user.admin?
+    end
+
+    # Confirms the correct user.
+    def correct_user
+      @user = User.find(params[:id])
+      redirect_to(root_url) unless current_user?(@user)
     end
 
 end
