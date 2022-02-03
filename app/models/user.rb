@@ -45,6 +45,10 @@ class User < ApplicationRecord
     BCrypt::Password.new(digest).is_password?(token)
   end
 
+  def github_connected?
+    return !self.github_access_token.nil?
+  end
+
   # Forgets a user.
   def forget
     update_attribute(:remember_digest, nil)
@@ -53,6 +57,11 @@ class User < ApplicationRecord
   # Activates an account.
   def activate
     update_columns(activated: true, activated_at: Time.zone.now)
+  end
+
+  # Updates Github access token
+  def connect_to_github(token, username)
+    update_columns(github_access_token: token, github_username: username)
   end
 
   # Sends activation email.
@@ -76,7 +85,6 @@ class User < ApplicationRecord
     reset_sent_at < 2.hours.ago
   end
 
-  # Returns a user's status feed.
   # Returns a user's status feed.
   def feed
     following_ids = "SELECT followed_id FROM relationships
