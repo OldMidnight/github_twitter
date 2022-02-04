@@ -33,7 +33,9 @@ class StaticPagesController < ApplicationController
       
       github_user = github.user
 
-      current_user.connect_to_github(github.access_token, github_user[:login])
+      p github_user
+
+      current_user.connect_to_github(github.access_token, github_user["login"])
       flash[:success] = "Github account connected!"
 
       redirect_to current_user
