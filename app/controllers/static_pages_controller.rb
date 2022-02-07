@@ -33,9 +33,23 @@ class StaticPagesController < ApplicationController
       
       github_user = github.user
 
-      p github_user
-
       current_user.connect_to_github(github.access_token, github_user["login"])
+      github_repositories = github.repositories(github_user["login"])
+
+      p github_repositories
+
+      github_repositories.each do |github_repository|
+        repository = current_user.repositories.build({
+          repository_id: github_repository["id"],
+          name: github_repository["full_name"],
+          hook_id: nil
+        })
+        
+        repository.save!
+
+        p repository
+      end
+
       flash[:success] = "Github account connected!"
 
       redirect_to current_user

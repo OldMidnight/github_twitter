@@ -2,6 +2,9 @@ class User < ApplicationRecord
   attr_accessor :remember_token, :activation_token, :reset_token
   
   has_many :microposts, dependent: :destroy
+  has_many :repositories, class_name: "Repository",
+                          foreign_key: "owner_id",
+                          dependent: :destroy
   has_many :active_relationships, class_name: "Relationship",
                                   foreign_key: "follower_id",
                                   dependent: :destroy
@@ -101,6 +104,11 @@ class User < ApplicationRecord
   # Unfollows a user.
   def unfollow(other_user)
     following.delete(other_user)
+  end
+
+  # Adds a repository.
+  def add_repository(repository)
+    repositories << repository
   end
   
   # Returns true if the current user is following the other user.

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_03_110930) do
+ActiveRecord::Schema.define(version: 2022_02_07_092037) do
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -59,6 +59,15 @@ ActiveRecord::Schema.define(version: 2022_02_03_110930) do
     t.index ["follower_id"], name: "index_relationships_on_follower_id"
   end
 
+  create_table "repositories", force: :cascade do |t|
+    t.integer "repository_id"
+    t.string "name"
+    t.string "hook_id"
+    t.integer "owner_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "email"
@@ -74,6 +83,7 @@ ActiveRecord::Schema.define(version: 2022_02_03_110930) do
     t.datetime "reset_sent_at"
     t.string "github_access_token"
     t.string "github_username"
+    t.string "webhook_id"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

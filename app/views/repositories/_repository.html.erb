@@ -1,0 +1,12 @@
+<div id="repository-<%= repository.id %>">
+  <span><%= repository.name %></span>
+  <%= form_with(url: repositories_path, remote: true) do |f| %>
+    <div><%= hidden_field_tag :repository_name, repository.name %></div>
+    <div><%= hidden_field_tag :repository_id, repository.id %></div>
+    <% if repository.hook_id.nil? %>
+      <%= f.submit "Subscribe", class: "btn btn-primary"%>
+    <% else %>
+      <%= f.submit "Unsubscribe", class: "btn btn-error"%>
+    <% end %>
+  <% end %>
+</div>

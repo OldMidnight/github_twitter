@@ -12,7 +12,8 @@
     </section>
     <section class="github">
       <% if @user.github_connected? %>
-        <%= link_to "Github", "https://github.com/#{@user.github_username}" %>
+        <%= link_to "Github", "https://github.com/#{@user.github_username}" %> |
+        <%= link_to "Manage Repositories", repositories_user_path %>
       <% else %>
         <%= link_to "Connect Github", @github_connection_url %>
       <% end %>
