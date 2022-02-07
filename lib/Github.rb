@@ -68,4 +68,23 @@ class Github
         headers: headers
       })
   end
+
+  def handle_push(data)
+    github_username = data["repository"]["owner"]["login"]
+    @user = User.find_by(github_username: github_username)
+    @repository = Repository.find_by(repository_id: data["repository"]["id"])
+    commits = data["commits"].map {|commit| "#{commit['message']} - #{commit['timestamp']}\n"}
+
+    content = "
+    Heyo! I just made a push to #{@repository.name} with the following commit(s):\n
+    #{commits}\n
+    Let me know what you think!
+    "
+    @micropost = @user.microposts.build({
+      content: content
+    })
+
+    @micropost.save!
+  end
+  handle_asynchronously :handle_push
 end

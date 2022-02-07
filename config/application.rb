@@ -21,5 +21,8 @@ module SampleApp
 
     # Include the authenticity token in remote forms.
     config.action_view.embed_authenticity_token_in_remote_forms = true
+
+    config.active_job.queue_adapter = :delayed_job
+    config.autoload_paths << Rails.root.join('lib')
   end
 end
