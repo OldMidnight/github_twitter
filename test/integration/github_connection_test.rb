@@ -1,5 +1,4 @@
 require "test_helper"
-require 'github'
 
 class GithubConnectionTest < ActionDispatch::IntegrationTest
   def setup

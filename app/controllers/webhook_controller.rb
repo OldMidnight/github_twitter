@@ -1,12 +1,10 @@
-require 'github'
-
 class WebhookController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def index
     if params.has_key? "zen"
       head(:ok) and return
-    end
+    en
 
     github = Github.new
     github.handle_push(params)
