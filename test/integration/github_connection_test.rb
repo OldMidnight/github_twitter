@@ -5,10 +5,10 @@ class GithubConnectionTest < ActionDispatch::IntegrationTest
   def setup
     @user = users(:michael)
     @github = Minitest::Mock.new
-    def @github.user() { login: "michael" } end
+    def @github.user() { login: "michael" }.with_indifferent_access end
     def @github.new_access_token(code) 200 end
     def @github.access_token() '1234' end
-    def @github.repositories(username) { test: 1 } end
+    def @github.repositories(username) [{ id: 1, full_name: 'test' }] end
   end
 
   test "connect to github and update user access_token" do

@@ -1,4 +1,5 @@
 require 'httparty'
+require 'github'
 
 class StaticPagesController < ApplicationController
   before_action :logged_in_user, only: [:callback]
@@ -33,9 +34,8 @@ class StaticPagesController < ApplicationController
       github_user = github.user
 
       current_user.connect_to_github(github.access_token, github_user["login"])
-      github_repositories = github.repositories(github_user["login"])
 
-      p github_repositories
+      github_repositories = github.repositories(github_user["login"])
 
       github_repositories.each do |github_repository|
         repository = current_user.repositories.build({
@@ -45,8 +45,6 @@ class StaticPagesController < ApplicationController
         })
         
         repository.save!
-
-        p repository
       end
 
       flash[:success] = "Github account connected!"
