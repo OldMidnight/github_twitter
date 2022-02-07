@@ -1,3 +1,5 @@
+require 'github'
+
 class RepositoriesController < ApplicationController
   def index
   end
@@ -12,15 +14,16 @@ class RepositoriesController < ApplicationController
     response = github.subscribe_to_repo(params[:repository_name])
 
     if response.code != 201
-      flash[:danger] = "An error occurred authenticating your github account. Please try again."
+      result = JSON.parse(response.body)
+      flash[:danger] = "Github API Error: " + result["message"]
       redirect_to root_url and return
     end
 
     result = JSON.parse(response.body)
     @repository.update_webhook(result["id"])
-    flash[:success] = "Github account connected!"
+    flash[:success] = "Repository subscribed!"
 
-    redirect_to repositories_user_path
+    redirect_to repositories_user_path @user.id
   end
 
   def edit

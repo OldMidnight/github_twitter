@@ -1,4 +1,5 @@
 require 'httparty'
+require 'json'
 
 class Github
   include HTTParty
@@ -58,13 +59,13 @@ class Github
       { 
         body: {
           config: {
-            url: "#{ENV[APP_URL]}/hooks",
-            content_type: 'json',
+            url: "#{ENV['APP_URL']}/hooks",
+            content_type: "json",
             secret: ENV['WEBHOOK_SECRET']
           },
           events: ['pull_request', 'push']
-        },
+        }.to_json,
         headers: headers
-        })
+      })
   end
 end
