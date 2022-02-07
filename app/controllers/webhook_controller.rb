@@ -4,7 +4,7 @@ class WebhookController < ApplicationController
   def index
     if params.has_key? "zen"
       head(:ok) and return
-    en
+    end
 
     github = Github.new
     github.handle_push(params)
